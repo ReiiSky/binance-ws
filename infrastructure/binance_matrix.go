@@ -556,7 +556,7 @@ var binanceMatrix = map[string]binanceConfig{
 	},
 	"qtumeth": {
 		tableName: "qtum_eth",
-		dbIndex:   0,
+		dbIndex:   3,
 	},
 	"qtumusdt": {
 		tableName: "qtum_usdt",
