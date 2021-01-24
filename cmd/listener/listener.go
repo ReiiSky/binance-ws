@@ -2,6 +2,7 @@ package listener
 
 import (
 	"binance/listener/interfaces"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -22,8 +23,9 @@ func RunListener() {
 	client.OnDisconnected = interfaces.HandleClose
 	client.OnPingReceived = interfaces.HandlePing
 	client.OnPongReceived = interfaces.HandlePong
+	fmt.Println("Connected")
 	client.Connect()
-
+	
 	for {
 		select {
 		case <-interrupt:
