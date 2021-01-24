@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -28,24 +29,49 @@ func InitBinanceDB(url []string, dbname []string, user []string, password []stri
 	}
 }
 
-func InsertQuery(dbIndex int, query string) int64 {
+func InsertQuery(dbIndex int, query string) (int64, int64) {
 	if dbIndex < len(dbList) && dbIndex > -1 {
 		res, err := dbList[dbIndex].Exec(query)
 		if err != nil {
 			log.Println(err)
-			return -1
+			return -1, -1
 		}
 
-		c, err := res.RowsAffected()
+		a, err := res.RowsAffected()
 		if err != nil {
 			log.Println(err)
-			return -1
+			return -1, -1
 		}
-		return c
+		i, err := res.LastInsertId()
+		if err != nil {
+			log.Println(err)
+			return -1, -1
+		}
+		return i, a
 	}
-	return -1
+	return -1, -1
+}
+
+func RowQuery(dbIndex int, query string, result interface{}) {
+	if dbIndex < len(dbList) && dbIndex > -1 {
+		res := dbList[dbIndex].QueryRow(query)
+		err := res.Err()
+		if err != nil {
+			log.Println(err)
+		}
+		err = res.Scan(result)
+		if err != nil {
+			log.Println(err)
+		}
+	}
 }
 
 func StartProfiles(dbIndex int) {
 	InsertQuery(dbIndex, `SET profiling=1;`)
+}
+
+func GetProfiles(dbIndex int, id int64) float64 {
+	var result float64
+	RowQuery(dbIndex, fmt.Sprintf(`SELECT sum(duration) as duration FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=%d;`, id), &result)
+	return result
 }
