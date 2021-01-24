@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strings"
 )
 
 var dbList = []*sql.DB{}
@@ -52,14 +53,14 @@ func InsertQuery(dbIndex int, query string) (int64, int64) {
 	return -1, -1
 }
 
-func RowQuery(dbIndex int, query string, result interface{}) {
+func RowQuery(dbIndex int, query string, result ...interface{}) {
 	if dbIndex < len(dbList) && dbIndex > -1 {
 		res := dbList[dbIndex].QueryRow(query)
 		err := res.Err()
 		if err != nil {
 			log.Println(err)
 		}
-		err = res.Scan(result)
+		err = res.Scan(result...)
 		if err != nil {
 			log.Println(err)
 		}
@@ -73,5 +74,43 @@ func StartProfiles(dbIndex int) {
 func GetProfiles(dbIndex int, id int64) float64 {
 	var result float64
 	RowQuery(dbIndex, fmt.Sprintf(`SELECT sum(duration) as duration FROM INFORMATION_SCHEMA.PROFILING WHERE QUERY_ID=%d;`, id), &result)
+	return result
+}
+
+func RowsQuery(dbIndex int, query string, callback func(*sql.Rows) bool) {
+	if dbIndex < len(dbList) && dbIndex > -1 {
+		res, err := dbList[dbIndex].Query(query)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
+		for res.Next() {
+			if callback(res) {
+				err := res.Close()
+				if err != nil {
+					log.Println(err)
+				}
+				return
+			}
+		}
+	}
+}
+func GetProfilesV2(dbIndex int, query string) float64 {
+	var result float64
+	RowsQuery(dbIndex, `show profiles;`, func(rows *sql.Rows) bool {
+		var id int
+		var duration float64
+		var q string
+
+		if err := rows.Scan(&id, &duration, &q); err != nil {
+			return false
+		}
+		if strings.Contains(query, q) {
+			result = duration
+			return true
+		}
+		return false
+	})
 	return result
 }
