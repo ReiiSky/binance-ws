@@ -22,7 +22,7 @@ func InitBinanceDB(url []string, dbname []string, user []string, password []stri
 	for i := 0; i < urlLen; i++ {
 		db, err := OpenMySQL(url[i], dbname[i], user[i], password[i])
 		if err != nil {
-			log.Println(err, "\n")
+			log.Println(err)
 		}
 		dbList = append(dbList,
 			db,
@@ -56,11 +56,8 @@ func InsertQuery(dbIndex int, query string) (int64, int64) {
 func RowQuery(dbIndex int, query string, result ...interface{}) {
 	if dbIndex < len(dbList) && dbIndex > -1 {
 		res := dbList[dbIndex].QueryRow(query)
-		err := res.Err()
-		if err != nil {
-			log.Println(err)
-		}
-		err = res.Scan(result...)
+
+		err := res.Scan(result...)
 		if err != nil {
 			log.Println(err)
 		}
