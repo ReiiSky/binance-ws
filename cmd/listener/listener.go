@@ -33,7 +33,7 @@ func RunListener() {
 		os.Getenv("DATABASE_PASSWORD"), ",",
 	)
 
-	defer infrastructure.InitBinanceDB(urlList, dbNameList, userList, passwordList)
+	infrastructure.InitBinanceDB(urlList, dbNameList, userList, passwordList)
 
 	client := gowebsocket.New(os.Getenv("WSURL"))
 	client.OnConnected = interfaces.HandleOpen
