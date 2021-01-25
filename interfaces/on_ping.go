@@ -4,7 +4,7 @@ import (
 	"binance/listener/infrastructure"
 	"fmt"
 
-	"github.com/sacOO7/gowebsocket"
+	gowebsocket "github.com/Satssuki/GoWebsocket"
 )
 
 func HandlePing(ping string, socket gowebsocket.Socket) {

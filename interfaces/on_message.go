@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sacOO7/gowebsocket"
+	gowebsocket "github.com/Satssuki/GoWebsocket"
 	"github.com/tidwall/gjson"
 )
 
