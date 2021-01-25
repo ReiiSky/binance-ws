@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"strings"
 
-	"github.com/sacOO7/gowebsocket"
+	gowebsocket "github.com/Satssuki/GoWebsocket"
 )
 
 // RunListener for binance websocket
@@ -33,7 +33,7 @@ func RunListener() {
 		os.Getenv("DATABASE_PASSWORD"), ",",
 	)
 
-	infrastructure.InitBinanceDB(urlList, dbNameList, userList, passwordList)
+	defer infrastructure.InitBinanceDB(urlList, dbNameList, userList, passwordList)
 
 	client := gowebsocket.New(os.Getenv("WSURL"))
 	client.OnConnected = interfaces.HandleOpen
