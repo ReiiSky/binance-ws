@@ -1,3 +1,5 @@
+github.com/Satssuki/GoWebsocket v0.0.0-20210125063339-d04d4afb92db h1:2tvtmReb35M7q3PPmKnG/3dnVdiALsPpNU44SttJ4bo=
+github.com/Satssuki/GoWebsocket v0.0.0-20210125063339-d04d4afb92db/go.mod h1:K2nnF4b22t3VUb/fKeCe1jR8zVaBbAY7mj5HjLaTDqY=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-sql-driver/mysql v1.5.0 h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=
 github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=

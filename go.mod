@@ -3,6 +3,7 @@ module binance/listener
 go 1.15
 
 require (
+	github.com/Satssuki/GoWebsocket v0.0.0-20210125063339-d04d4afb92db
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/joho/godotenv v1.3.0
