@@ -10,7 +10,7 @@ import (
 
 func HandleClose(err error, socket gowebsocket.Socket) {
 	infrastructure.InsertQuery(0, "INSERT INTO `log_binance` (`stat`, `timestamp`)VALUES ('close', now());")
-	fmt.Println(err, "close")
+	fmt.Println(err, "close", time.Now())
 
 	ReConnect(socket)
 }
