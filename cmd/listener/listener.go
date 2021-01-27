@@ -49,7 +49,7 @@ func RunListener() {
 		select {
 		case <-interrupt:
 			log.Println("interrupt")
-			client.Close()
+			os.Exit(0)
 			return
 		}
 	}
