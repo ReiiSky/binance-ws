@@ -27,7 +27,9 @@ func InitBinanceDB(url []string, dbname []string, user []string, password []stri
 		dbList = append(dbList,
 			db,
 		)
-		fmt.Printf("Connected to database `%s` `%s` `%s` `%s` \n", url[i], dbname[i], user[i], password[i])
+		if err == nil {
+			fmt.Printf("Connected to database `%s` `%s` `%s` `%s` \n", url[i], dbname[i], user[i], password[i])
+		}
 	}
 }
 
